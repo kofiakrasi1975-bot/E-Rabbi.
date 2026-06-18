@@ -1,0 +1,1610 @@
+index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#1A1464">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="https://placehold.co/192x192/1A1464/FFD23F?text=B">
+<title>Badwenma – JHS Learning App</title>
+<link rel="manifest" href="#" id="manifest-link">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --p:#1A1464;--p2:#2D2A8F;--y:#FFD23F;--c:#FF6B6B;--m:#4ECDC4;
+  --g:#22C55E;--bg:#F0F2FF;--card:#ffffff;--txt:#1A1464;--txt2:#6B7280;
+  --rad:14px;--shadow:0 2px 12px rgba(26,20,100,0.08);
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);display:flex;flex-direction:column;max-width:480px;margin:0 auto;position:relative}
+.topbar{background:var(--p);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:50}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.app-logo{width:34px;height:34px;background:var(--y);border-radius:9px;display:flex;align-items:center;justify-content:center}
+.topbar h2{font-family:'Poppins',sans-serif;font-size:16px;font-weight:600;color:#fff}
+.streak-badge{display:flex;align-items:center;gap:5px;background:rgba(255,210,63,0.18);padding:5px 11px;border-radius:20px;font-size:13px;font-weight:600;color:var(--y);cursor:pointer}
+.screens{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:76px}
+.screen{display:none;padding:14px 14px 6px;animation:fadeUp 0.2s ease}
+.screen.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.nav{background:var(--p);display:flex;flex-shrink:0;border-top:1px solid rgba(255,255,255,0.08);z-index:100;position:relative}
+.nav-btn{flex:1;padding:9px 2px 7px;background:none;border:none;color:rgba(255,255,255,0.45);cursor:pointer;font-size:10px;font-family:'Inter',sans-serif;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color 0.15s;position:relative}
+.nav-btn i{font-size:22px;line-height:1}
+.nav-btn.active{color:var(--y)}
+.nav-badge{position:absolute;top:6px;right:calc(50% - 18px);background:var(--c);color:#fff;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--p)}
+.card{background:var(--card);border-radius:var(--rad);padding:16px;margin-bottom:14px;border:1px solid rgba(26,20,100,0.07);box-shadow:var(--shadow)}
+.card-title{font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;color:var(--p);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-title i{font-size:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 18px;border-radius:10px;font-size:14px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;border:none;transition:transform 0.12s,opacity 0.15s;text-decoration:none}
+.btn:active{transform:scale(0.96)}
+.btn-primary{background:var(--p);color:#fff}
+.btn-yellow{background:var(--y);color:var(--p)}
+.btn-outline{background:transparent;border:1.5px solid var(--p);color:var(--p)}
+.btn-coral{background:var(--c);color:#fff}
+.btn-mint{background:var(--m);color:#fff}
+.btn-green{background:var(--g);color:#fff}
+.btn-ghost{background:rgba(26,20,100,0.07);color:var(--p)}
+.btn-sm{padding:7px 12px;font-size:12px;border-radius:8px}
+.btn-full{width:100%}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.input{width:100%;padding:10px 13px;border:1.5px solid rgba(26,20,100,0.18);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;color:var(--txt);background:#fff;outline:none;transition:border-color 0.15s}
+.input:focus{border-color:var(--p)}
+select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%236B7280' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+label.field-label{font-size:12px;font-weight:500;color:var(--txt2);display:block;margin-bottom:5px}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
+.pill-red{background:#FFF0F0;color:#B91C1C}
+.pill-green{background:#ECFDF5;color:#065F46}
+.pill-blue{background:#EEF2FF;color:var(--p)}
+.pill-yellow{background:#FFFBEB;color:#92400E}
+.pill-mint{background:#F0FFFE;color:#0F766E}
+.pill-gray{background:#F3F4F6;color:#374151}
+.prog-wrap{background:#E8EAFF;border-radius:99px;height:7px;overflow:hidden}
+.prog-fill{height:100%;border-radius:99px;transition:width 0.6s ease}
+.upload-zone{border:2px dashed rgba(26,20,100,0.22);border-radius:12px;padding:28px 16px;text-align:center;background:#F8F9FF;cursor:pointer;transition:all 0.2s}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--p);background:#EEF2FF}
+.upload-zone i{font-size:40px;color:var(--p);opacity:0.35;display:block;margin-bottom:8px}
+.section-label{font-size:11px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px}
+.tab-bar{display:flex;gap:7px;margin-bottom:14px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab{padding:7px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1.5px solid rgba(26,20,100,0.15);background:transparent;color:var(--txt2);cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif;transition:all 0.15s;flex-shrink:0}
+.tab.active{background:var(--p);color:#fff;border-color:var(--p)}
+.res-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid rgba(26,20,100,0.06)}
+.res-item:last-child{border-bottom:none}
+.res-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.res-icon.vid{background:#FFF0F0;color:var(--c)}
+.res-icon.doc{background:#EEF2FF;color:var(--p)}
+.res-icon.note{background:#ECFDF5;color:#065F46}
+.res-icon.quiz-icon{background:#FFFBEB;color:#92400E}
+.res-info{flex:1;min-width:0}
+.res-title{font-size:13px;font-weight:500;color:var(--p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.res-sub{font-size:11px;color:var(--txt2);margin-top:2px}
+.res-actions{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
+.quiz-option{display:block;width:100%;text-align:left;background:#F8F9FF;border:1.5px solid rgba(26,20,100,0.1);border-radius:10px;padding:12px 14px;margin-bottom:10px;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;color:var(--txt);transition:all 0.15s}
+.quiz-option:hover:not(:disabled){border-color:var(--p);background:#EEF2FF}
+.quiz-option.correct{border-color:var(--g)!important;background:#ECFDF5!important;color:#065F46!important}
+.quiz-option.wrong{border-color:var(--c)!important;background:#FFF0F0!important;color:#B91C1C!important}
+.quiz-option:disabled{cursor:default}
+.speed-ring-wrap{width:150px;height:150px;margin:0 auto 14px;position:relative}
+.speed-ring-wrap svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:#E8EAFF;stroke-width:13}
+.ring-fill{fill:none;stroke:var(--m);stroke-width:13;stroke-linecap:round;stroke-dasharray:408;stroke-dashoffset:408;transition:stroke-dashoffset 1.2s ease}
+.ring-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+.hero{background:var(--p);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden}
+.hero::after{content:'📚';position:absolute;right:-10px;bottom:-14px;font-size:80px;opacity:0.12;pointer-events:none}
+.hero h3{font-family:'Poppins',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:3px}
+.hero p{font-size:13px;color:rgba(255,255,255,0.72)}
+.stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.stat-mini{background:var(--card);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(26,20,100,0.07)}
+.stat-mini .val{font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:var(--p)}
+.stat-mini .lbl{font-size:10px;color:var(--txt2);margin-top:1px}
+.toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%) translateY(10px);background:#1A1464;color:#fff;padding:10px 20px;border-radius:99px;font-size:13px;font-weight:500;opacity:0;transition:opacity 0.2s,transform 0.2s;z-index:500;white-space:nowrap;max-width:90vw;text-align:center;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.modal-overlay{position:fixed;inset:0;background:rgba(10,8,50,0.6);z-index:300;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:#fff;border-radius:22px 22px 0 0;padding:20px 16px 32px;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;transform:translateY(100%);transition:transform 0.3s ease}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-handle{width:38px;height:4px;background:#D1D5DB;border-radius:99px;margin:0 auto 18px}
+.ai-bubble{background:#F0F2FF;border-radius:12px;padding:14px;font-size:13px;line-height:1.75;color:var(--txt);border-left:3px solid var(--p);margin-top:12px;min-height:40px}
+.ai-bubble .cursor{display:inline-block;width:2px;height:14px;background:var(--p);animation:blink 0.8s infinite;vertical-align:middle;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner.dark{border-color:rgba(26,20,100,0.2);border-top-color:var(--p)}
+.offline-banner{background:#FEF3C7;border:1px solid #FCD34D;padding:8px 14px;font-size:12px;color:#92400E;display:flex;align-items:center;gap:7px;border-radius:10px;margin-bottom:12px}
+.avatar{width:48px;height:48px;border-radius:50%;background:var(--y);display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-size:18px;font-weight:700;color:var(--p);flex-shrink:0}
+.divider{height:1px;background:rgba(26,20,100,0.07);margin:12px 0}
+.empty-state{text-align:center;padding:30px 20px}
+.empty-state i{font-size:44px;color:var(--p);opacity:0.2;display:block;margin-bottom:10px}
+.empty-state p{font-size:13px;color:var(--txt2);line-height:1.7}
+.score-topic{margin-bottom:11px}
+.score-topic-header{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.feedback-box{padding:12px;border-radius:10px;font-size:13px;line-height:1.65;margin-top:10px}
+.feedback-box.correct{background:#ECFDF5;color:#065F46;border-left:3px solid var(--g)}
+.feedback-box.wrong{background:#FFF0F0;color:#B91C1C;border-left:3px solid var(--c)}
+.feedback-box.timeout{background:#FFFBEB;color:#92400E;border-left:3px solid var(--y)}
+.subject-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:8px;border:1.5px solid rgba(26,20,100,0.15);font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;background:#fff;color:var(--txt2);transition:all 0.15s;margin:4px}
+.subject-chip.selected{background:var(--p);color:#fff;border-color:var(--p)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+</style>
+</head>
+<body>
+
+<!-- Firebase SDK — must load BEFORE config script -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<!-- PDF.js -->
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<!-- CONFIG — fill in your Gemini key below -->
+<script>
+const CONFIG = {
+  GEMINI_KEY: "YOUR_GEMINI_API_KEY_HERE",
+  FIREBASE: {
+    apiKey:            "AIzaSyBKStRxCoWUNAaOC1q4wuRYFiA5C4sERXQ",
+    authDomain:        "badwenma-d2475.firebaseapp.com",
+    projectId:         "badwenma-d2475",
+    storageBucket:     "badwenma-d2475.firebasestorage.app",
+    messagingSenderId: "895490107431",
+    appId:             "1:895490107431:web:76a3848557832ca7548602"
+  }
+};
+
+// Inline PWA manifest
+(function(){
+  const m={
+    name:"Badwenma",short_name:"Badwenma",
+    description:"Smart JHS study companion for Ghanaian students",
+    start_url:"/",display:"standalone",
+    background_color:"#1A1464",theme_color:"#1A1464",
+    icons:[
+      {src:"https://placehold.co/192x192/1A1464/FFD23F?text=B",sizes:"192x192",type:"image/png"},
+      {src:"https://placehold.co/512x512/1A1464/FFD23F?text=B",sizes:"512x512",type:"image/png"}
+    ]
+  };
+  const blob=new Blob([JSON.stringify(m)],{type:"application/manifest+json"});
+  document.getElementById("manifest-link").href=URL.createObjectURL(blob);
+})();
+</script>
+
+
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="app-logo"><i class="ti ti-book-2" style="font-size:18px;color:var(--p)" aria-hidden="true"></i></div>
+    <h2 id="topbar-title">Badwenma</h2>
+  </div>
+  <div class="streak-badge" onclick="navTo('profile')" title="View profile">
+    🔥 <span id="streak-num">0</span> day streak
+  </div>
+</div>
+
+<!-- SCREENS -->
+<div class="screens" id="screens">
+
+  <!-- ONBOARDING -->
+  <div id="screen-onboard" class="screen active">
+    <div style="text-align:center;padding:30px 10px 20px">
+      <div style="font-size:72px;margin-bottom:16px">📚</div>
+      <h1 style="font-family:'Poppins',sans-serif;font-size:26px;font-weight:700;color:var(--p);margin-bottom:8px">Welcome to Badwenma</h1>
+      <p style="font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:28px">Your smart study companion for JHS.<br>Scan exams, find your weak spots, and improve with AI-powered resources.</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-user" aria-hidden="true"></i> Create your profile</div>
+      <label class="field-label">Your name</label>
+      <input class="input" id="ob-name" placeholder="e.g. Kwame Asante" style="margin-bottom:12px">
+      <label class="field-label">Class / Year</label>
+      <select class="input" id="ob-class" style="margin-bottom:12px">
+        <option value="">Select your class</option>
+        <option>JHS 1</option><option>JHS 2</option><option>JHS 3</option>
+      </select>
+      <label class="field-label">School name (optional)</label>
+      <input class="input" id="ob-school" placeholder="e.g. Asante Mampong D/A JHS" style="margin-bottom:18px">
+      <div class="section-label">Subjects you study</div>
+      <div id="subject-chips">
+        <span class="subject-chip selected" data-subj="Mathematics">📐 Mathematics</span>
+        <span class="subject-chip selected" data-subj="Integrated Science">🔬 Science</span>
+        <span class="subject-chip selected" data-subj="English Language">📖 English</span>
+        <span class="subject-chip selected" data-subj="Social Studies">🌍 Social Studies</span>
+        <span class="subject-chip" data-subj="ICT">💻 ICT</span>
+        <span class="subject-chip" data-subj="French">🇫🇷 French</span>
+        <span class="subject-chip" data-subj="RME">✝️ RME</span>
+        <span class="subject-chip" data-subj="Creative Arts">🎨 Creative Arts</span>
+      </div>
+      <button class="btn btn-primary btn-full" style="margin-top:18px;padding:13px" onclick="saveProfile()">
+        <i class="ti ti-arrow-right" aria-hidden="true"></i> Get started
+      </button>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <div id="screen-home" class="screen">
+    <div id="offline-banner-home" class="offline-banner" style="display:none">
+      <i class="ti ti-wifi-off" aria-hidden="true"></i> You're offline — saved resources still work
+    </div>
+    <div class="hero">
+      <h3 id="home-greeting">Hello! 👋</h3>
+      <p id="home-subtext">Keep up the great work today.</p>
+      <div style="margin-top:14px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:5px">
+          <span>Today's goal</span><span id="home-goal-text">0 / 5 tasks</span>
+        </div>
+        <div class="prog-wrap" style="background:rgba(255,255,255,0.2)">
+          <div class="prog-fill" id="home-goal-bar" style="width:0%;background:var(--y)"></div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-mini"><div class="val" id="stat-score">–</div><div class="lbl">Avg score</div></div>
+      <div class="stat-mini"><div class="val" id="stat-quiz">0</div><div class="lbl">Quizzes done</div></div>
+      <div class="stat-mini"><div class="val" id="stat-wpm">–</div><div class="lbl">Best WPM</div></div>
+    </div>
+    <div class="card" id="weak-card" style="display:none">
+      <div class="card-title" style="color:var(--c)"><i class="ti ti-alert-triangle" style="color:var(--c)" aria-hidden="true"></i> Weak spots to fix</div>
+      <div id="weak-list"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-layout-grid" aria-hidden="true"></i> Quick actions</div>
+      <div class="grid-2">
+        <button class="btn btn-primary" onclick="navTo('scan')"><i class="ti ti-scan" aria-hidden="true"></i> Scan exam</button>
+        <button class="btn btn-yellow" onclick="navTo('speed')"><i class="ti ti-bolt" aria-hidden="true"></i> Speed test</button>
+        <button class="btn btn-outline" onclick="navTo('resources')"><i class="ti ti-books" aria-hidden="true"></i> Resources</button>
+        <button class="btn btn-mint" onclick="navTo('quiz')"><i class="ti ti-help-circle" aria-hidden="true"></i> Mini quiz</button>
+      </div>
+    </div>
+    <div class="card" id="recent-card" style="display:none">
+      <div class="card-title"><i class="ti ti-history" aria-hidden="true"></i> Recent activity</div>
+      <div id="recent-list"></div>
+    </div>
+  </div>
+
+  <!-- SCAN -->
+  <div id="screen-scan" class="screen">
+    <div class="tab-bar">
+      <button class="tab active" onclick="scanTab(this,'upload')">Upload file</button>
+      <button class="tab" onclick="scanTab(this,'camera')">Camera scan</button>
+      <button class="tab" onclick="scanTab(this,'results')" id="tab-results" style="display:none">Results</button>
+    </div>
+    <div id="scan-upload">
+      <div class="card">
+        <div class="card-title"><i class="ti ti-file-upload" aria-hidden="true"></i> Upload exam sheet or notes</div>
+        <div class="upload-zone" id="drop-zone"
+          onclick="document.getElementById('file-input').click()"
+          ondragover="event.preventDefault();this.classList.add('drag')"
+          ondragleave="this.classList.remove('drag')"
+          ondrop="handleDrop(event)">
+          <i class="ti ti-cloud-upload" aria-hidden="true"></i>
+          <p style="font-size:14px;font-weight:500;color:var(--p)">Tap to upload a file</p>
+          <p style="font-size:12px;color:var(--txt2);margin-top:4px">PDF, PPTX, JPG, PNG supported · Max 20 MB</p>
+        </div>
+        <input type="file" id="file-input" accept=".pdf,.pptx,.ppt,.png,.jpg,.jpeg" multiple style="display:none" onchange="handleFiles(this.files)">
+      </div>
+      <div id="file-queue" style="display:none">
+        <div class="card">
+          <div class="card-title"><i class="ti ti-files" aria-hidden="true"></i> Files ready</div>
+          <div id="file-list"></div>
+          <label class="field-label" style="margin-top:10px">Subject (helps AI give better feedback)</label>
+          <select class="input" id="scan-subject" style="margin-bottom:12px">
+            <option value="">Auto-detect</option>
+            <option>Mathematics</option><option>Integrated Science</option>
+            <option>English Language</option><option>Social Studies</option>
+            <option>ICT</option><option>French</option><option>RME</option>
+          </select>
+          <button class="btn btn-primary btn-full" id="analyse-btn" onclick="analyseFiles()" style="padding:13px">
+            <i class="ti ti-wand" aria-hidden="true"></i> Analyse with AI
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="scan-camera" style="display:none">
+      <div class="card">
+        <div class="card-title"><i class="ti ti-camera" aria-hidden="true"></i> Scan answer sheet</div>
+        <div id="camera-container" style="background:#F0F2FF;border-radius:12px;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:14px;overflow:hidden;position:relative">
+          <video id="camera-video" style="width:100%;height:100%;object-fit:cover;display:none" playsinline></video>
+          <canvas id="camera-canvas" style="display:none"></canvas>
+          <div id="camera-placeholder" style="text-align:center">
+            <i class="ti ti-camera" style="font-size:48px;color:var(--p);opacity:0.25" aria-hidden="true"></i>
+            <p style="font-size:13px;color:var(--txt2);margin-top:10px">Camera preview appears here</p>
+          </div>
+          <img id="camera-snap" style="display:none;width:100%;height:100%;object-fit:contain;border-radius:12px" alt="Captured sheet">
+        </div>
+        <div style="display:flex;gap:8px" id="camera-controls">
+          <button class="btn btn-primary btn-full" onclick="startCamera()"><i class="ti ti-camera" aria-hidden="true"></i> Open camera</button>
+        </div>
+        <div class="card" style="margin-top:12px;margin-bottom:0;background:#F8F9FF;box-shadow:none">
+          <div style="font-size:12px;color:var(--txt2);line-height:1.8">
+            ✅ Good lighting, no shadows &nbsp; ✅ Sheet flat on a surface<br>
+            ✅ All questions/answers in frame &nbsp; ✅ Writing clearly visible
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="scan-results" style="display:none">
+      <div class="card" id="results-card">
+        <div id="results-loading" style="text-align:center;padding:20px">
+          <div class="spinner dark" style="width:28px;height:28px;border-width:3px;margin-bottom:12px"></div>
+          <p style="font-size:13px;color:var(--txt2)" id="results-loading-text">Reading your file...</p>
+        </div>
+        <div id="results-content" style="display:none">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+            <div id="score-circle" style="width:70px;height:70px;border-radius:50%;background:#EEF2FF;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0">
+              <div style="font-family:'Poppins',sans-serif;font-size:22px;font-weight:700;color:var(--p)" id="res-overall">–</div>
+              <div style="font-size:10px;color:var(--txt2)">overall</div>
+            </div>
+            <div>
+              <div style="font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;color:var(--p)" id="res-subject">Subject</div>
+              <div style="font-size:12px;color:var(--txt2);margin-top:2px" id="res-meta">Questions analysed</div>
+              <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap" id="res-pills"></div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="section-label" style="margin-top:10px">Topic breakdown</div>
+          <div id="res-topics"></div>
+          <div class="divider"></div>
+          <div class="section-label" style="margin-top:10px">AI feedback</div>
+          <div class="ai-bubble" id="res-feedback"></div>
+          <button class="btn btn-primary btn-full" style="margin-top:14px" onclick="getResourcesForResults()">
+            <i class="ti ti-books" aria-hidden="true"></i> Get resources for weak spots
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESOURCES -->
+  <div id="screen-resources" class="screen">
+    <div class="tab-bar">
+      <button class="tab active" onclick="resTab(this,'online')">Online</button>
+      <button class="tab" onclick="resTab(this,'offline')">Saved offline <span id="offline-count-badge" class="pill pill-mint" style="font-size:10px;padding:2px 7px;margin-left:4px">0</span></button>
+    </div>
+    <div id="res-online">
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <select class="input" id="res-subj-filter" onchange="loadResources()" style="flex:1">
+          <option value="">All subjects</option>
+          <option>Mathematics</option><option>Integrated Science</option>
+          <option>English Language</option><option>Social Studies</option>
+          <option>ICT</option><option>French</option><option>RME</option>
+        </select>
+        <select class="input" id="res-type-filter" onchange="loadResources()" style="width:105px">
+          <option value="">All types</option>
+          <option>Videos</option><option>Notes</option><option>Exercises</option>
+        </select>
+      </div>
+      <div id="res-search-hint" class="card" style="background:var(--p);border:none">
+        <div style="font-size:11px;font-weight:600;color:var(--y);margin-bottom:5px">⭐ AI-POWERED SEARCH</div>
+        <input class="input" id="res-search-input" placeholder="Search any topic..." style="background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2);color:#fff;caret-color:#fff">
+        <button class="btn btn-yellow" style="width:100%;margin-top:10px" onclick="searchResources()">
+          <i class="ti ti-search" aria-hidden="true"></i> Find resources with AI
+        </button>
+      </div>
+      <div id="res-list"></div>
+      <div id="res-loading" style="display:none;text-align:center;padding:20px">
+        <div class="spinner dark" style="width:24px;height:24px;border-width:3px;margin-bottom:8px"></div>
+        <p style="font-size:13px;color:var(--txt2)">Searching for resources...</p>
+      </div>
+    </div>
+    <div id="res-offline" style="display:none">
+      <div class="card">
+        <div class="card-title"><i class="ti ti-wifi-off" style="color:var(--c)" aria-hidden="true"></i> Saved for offline</div>
+        <div id="offline-list">
+          <div class="empty-state">
+            <i class="ti ti-cloud-off" aria-hidden="true"></i>
+            <p>No offline resources yet.<br>Download some from the Online tab.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEED TEST -->
+  <div id="screen-speed" class="screen">
+    <div id="speed-intro">
+      <div class="card">
+        <div class="card-title"><i class="ti ti-bolt" style="color:var(--y)" aria-hidden="true"></i> Reading speed test</div>
+        <p style="font-size:13px;color:var(--txt2);line-height:1.7;margin-bottom:14px">Read the passage as fast as you can while still understanding it. Tap <strong>Start</strong> when ready.</p>
+        <div class="tab-bar">
+          <button class="tab active" onclick="setSpeedLevel(this,'easy')">Easy</button>
+          <button class="tab" onclick="setSpeedLevel(this,'medium')">Medium</button>
+          <button class="tab" onclick="setSpeedLevel(this,'hard')">Hard</button>
+        </div>
+        <div style="background:#F8F9FF;border-radius:12px;padding:14px;font-size:14px;line-height:1.85;color:var(--txt);margin-bottom:14px" id="speed-passage-text"></div>
+        <div class="grid-2" style="margin-bottom:14px">
+          <div style="text-align:center;background:#EEF2FF;border-radius:10px;padding:11px">
+            <div style="font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:var(--p)" id="s-words">–</div>
+            <div style="font-size:11px;color:var(--txt2)">words</div>
+          </div>
+          <div style="text-align:center;background:#EEF2FF;border-radius:10px;padding:11px">
+            <div style="font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:var(--p)" id="s-target">–</div>
+            <div style="font-size:11px;color:var(--txt2)">target WPM</div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" style="padding:13px;font-size:15px" onclick="startSpeed()">
+          <i class="ti ti-player-play" aria-hidden="true"></i> Start reading
+        </button>
+      </div>
+    </div>
+    <div id="speed-active" style="display:none">
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-family:'Poppins',sans-serif;font-size:30px;font-weight:700;color:var(--c)" id="speed-clock">0.0s</div>
+          <span class="pill pill-red" style="animation:blink 1s infinite">● Recording</span>
+        </div>
+        <div style="background:#F8F9FF;border-radius:12px;padding:14px;font-size:15px;line-height:1.9;color:var(--txt);margin-bottom:16px" id="speed-active-text"></div>
+        <button class="btn btn-coral btn-full" style="padding:13px;font-size:15px" onclick="stopSpeed()">
+          <i class="ti ti-player-stop" aria-hidden="true"></i> Done reading
+        </button>
+      </div>
+    </div>
+    <div id="speed-results" style="display:none">
+      <div class="card">
+        <div style="text-align:center;padding:10px 0 16px">
+          <div class="speed-ring-wrap">
+            <svg width="150" height="150" viewBox="0 0 150 150">
+              <circle class="ring-bg" cx="75" cy="75" r="65"/>
+              <circle class="ring-fill" id="speed-ring" cx="75" cy="75" r="65"/>
+            </svg>
+            <div class="ring-center">
+              <div style="font-family:'Poppins',sans-serif;font-size:32px;font-weight:700;color:var(--p)" id="s-wpm-result">0</div>
+              <div style="font-size:12px;color:var(--txt2)">WPM</div>
+            </div>
+          </div>
+          <div style="font-family:'Poppins',sans-serif;font-size:16px;font-weight:600;color:var(--p);margin-bottom:5px" id="s-grade"></div>
+          <div style="font-size:13px;color:var(--txt2);max-width:270px;margin:0 auto;line-height:1.65" id="s-advice"></div>
+        </div>
+        <div class="grid-2" style="margin-bottom:14px">
+          <div style="text-align:center;background:#EEF2FF;border-radius:10px;padding:12px">
+            <div style="font-family:'Poppins',sans-serif;font-size:18px;font-weight:700;color:var(--p)" id="s-time">–</div>
+            <div style="font-size:11px;color:var(--txt2)">Time taken</div>
+          </div>
+          <div style="text-align:center;background:#EEF2FF;border-radius:10px;padding:12px">
+            <div style="font-family:'Poppins',sans-serif;font-size:18px;font-weight:700;color:var(--g)" id="s-best">–</div>
+            <div style="font-size:11px;color:var(--txt2)">Personal best</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;box-shadow:none;border-color:rgba(26,20,100,0.07)">
+          <div class="card-title" style="font-size:13px;margin-bottom:8px"><i class="ti ti-chart-line" aria-hidden="true"></i> Progress history</div>
+          <canvas id="speed-chart" height="80"></canvas>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-outline" style="flex:1" onclick="retrySpeed()"><i class="ti ti-refresh" aria-hidden="true"></i> Try again</button>
+          <button class="btn btn-yellow" style="flex:1" onclick="navTo('quiz')"><i class="ti ti-help-circle" aria-hidden="true"></i> Take quiz</button>
+        </div>
+        <div class="ai-bubble" id="s-ai-tip" style="margin-top:12px;display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="screen-quiz" class="screen">
+    <div id="quiz-start">
+      <div class="card" style="text-align:center;padding:24px 16px">
+        <div style="font-size:64px;margin-bottom:12px">🧠</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:var(--p);margin-bottom:6px">Mini Quiz</div>
+        <p style="font-size:13px;color:var(--txt2);margin-bottom:20px;line-height:1.7">5 questions · AI-generated · Based on your weak spots</p>
+        <div class="section-label" style="text-align:left">Subject</div>
+        <div id="quiz-subject-chips" style="margin-bottom:18px;text-align:left"></div>
+        <div class="section-label" style="text-align:left">Difficulty</div>
+        <div style="display:flex;gap:8px;margin-bottom:20px">
+          <button class="tab active" onclick="setQuizDiff(this,'easy')">Easy</button>
+          <button class="tab" onclick="setQuizDiff(this,'medium')">Medium</button>
+          <button class="tab" onclick="setQuizDiff(this,'hard')">Hard</button>
+        </div>
+        <button class="btn btn-primary btn-full" style="padding:13px;font-size:15px" id="quiz-start-btn" onclick="beginQuiz()">
+          <i class="ti ti-player-play" aria-hidden="true"></i> Start quiz
+        </button>
+        <button class="btn btn-ghost btn-full" style="margin-top:10px" onclick="navTo('home')">Skip for now</button>
+      </div>
+    </div>
+    <div id="quiz-active" style="display:none">
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="display:flex;gap:7px">
+            <span class="pill pill-blue">Q <span id="qnum">1</span> / 5</span>
+            <span class="pill pill-yellow" id="q-subj-pill">–</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:14px;font-weight:600;color:var(--p)">
+            <i class="ti ti-clock" style="font-size:16px" aria-hidden="true"></i>
+            <span id="q-timer">30</span>s
+          </div>
+        </div>
+        <div class="prog-wrap" style="margin-bottom:16px">
+          <div class="prog-fill" id="q-prog" style="width:20%;background:var(--p)"></div>
+        </div>
+        <div id="q-loading" style="text-align:center;padding:20px">
+          <div class="spinner dark" style="width:24px;height:24px;border-width:3px;margin-bottom:8px"></div>
+          <p style="font-size:13px;color:var(--txt2)">Generating question...</p>
+        </div>
+        <div id="q-content" style="display:none">
+          <div style="font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;color:var(--p);line-height:1.55;margin-bottom:18px" id="q-text"></div>
+          <div id="q-options"></div>
+          <div id="q-feedback" style="display:none"></div>
+          <div id="q-next" style="display:none;margin-top:12px">
+            <button class="btn btn-primary btn-full" onclick="nextQuizQ()">Next <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="quiz-results" style="display:none">
+      <div class="card" style="text-align:center;padding:24px 16px">
+        <div style="font-size:64px;margin-bottom:10px" id="quiz-emoji">🎉</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:26px;font-weight:700;color:var(--p)" id="quiz-score-txt">0/5</div>
+        <div style="font-size:14px;color:var(--txt2);margin-top:4px;margin-bottom:18px" id="quiz-verdict"></div>
+        <div class="grid-2" style="margin-bottom:18px">
+          <div style="background:#ECFDF5;border-radius:10px;padding:12px">
+            <div style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:700;color:var(--g)" id="qr-correct">0</div>
+            <div style="font-size:11px;color:#065F46">Correct</div>
+          </div>
+          <div style="background:#FFF0F0;border-radius:10px;padding:12px">
+            <div style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:700;color:var(--c)" id="qr-wrong">0</div>
+            <div style="font-size:11px;color:#B91C1C">Wrong</div>
+          </div>
+        </div>
+        <div class="ai-bubble" id="quiz-ai-summary" style="text-align:left;margin-bottom:16px"></div>
+        <button class="btn btn-primary btn-full" style="margin-bottom:10px" onclick="retryQuiz()"><i class="ti ti-refresh" aria-hidden="true"></i> Try again</button>
+        <button class="btn btn-outline btn-full" onclick="navTo('home')">Back to home</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div id="screen-profile" class="screen">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+        <div class="avatar" id="profile-avatar">K</div>
+        <div>
+          <div style="font-family:'Poppins',sans-serif;font-size:17px;font-weight:700;color:var(--p)" id="profile-name">Student</div>
+          <div style="font-size:13px;color:var(--txt2)" id="profile-class">–</div>
+          <div style="font-size:12px;color:var(--txt2)" id="profile-school"></div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div style="background:#EEF2FF;border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:26px;font-weight:700;color:var(--p);font-family:'Poppins',sans-serif" id="pf-streak">0</div>
+          <div style="font-size:11px;color:var(--txt2)">🔥 Day streak</div>
+        </div>
+        <div style="background:#EEF2FF;border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:26px;font-weight:700;color:var(--p);font-family:'Poppins',sans-serif" id="pf-quizzes">0</div>
+          <div style="font-size:11px;color:var(--txt2)">📝 Quizzes done</div>
+        </div>
+        <div style="background:#EEF2FF;border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:26px;font-weight:700;color:var(--p);font-family:'Poppins',sans-serif" id="pf-scans">0</div>
+          <div style="font-size:11px;color:var(--txt2)">📄 Exams scanned</div>
+        </div>
+        <div style="background:#EEF2FF;border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:26px;font-weight:700;color:var(--p);font-family:'Poppins',sans-serif" id="pf-best-wpm">–</div>
+          <div style="font-size:11px;color:var(--txt2)">⚡ Best WPM</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-bar" aria-hidden="true"></i> Quiz performance</div>
+      <canvas id="profile-chart" height="100"></canvas>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-settings" aria-hidden="true"></i> Settings</div>
+      <button class="btn btn-outline btn-full" style="margin-bottom:10px" onclick="editProfile()"><i class="ti ti-edit" aria-hidden="true"></i> Edit profile</button>
+      <button class="btn btn-ghost btn-full" onclick="clearData()"><i class="ti ti-trash" style="color:var(--c)" aria-hidden="true"></i> Clear all data</button>
+    </div>
+  </div>
+
+</div><!-- /screens -->
+
+<!-- BOTTOM NAV -->
+<nav class="nav" aria-label="Main navigation">
+  <button class="nav-btn active" id="nav-home" onclick="navTo('home')">
+    <i class="ti ti-home" aria-hidden="true"></i><span>Home</span>
+  </button>
+  <button class="nav-btn" id="nav-scan" onclick="navTo('scan')">
+    <i class="ti ti-scan" aria-hidden="true"></i><span>Scan</span>
+  </button>
+  <button class="nav-btn" id="nav-resources" onclick="navTo('resources')">
+    <i class="ti ti-books" aria-hidden="true"></i><span>Resources</span>
+  </button>
+  <button class="nav-btn" id="nav-speed" onclick="navTo('speed')">
+    <i class="ti ti-bolt" aria-hidden="true"></i><span>Speed</span>
+  </button>
+  <button class="nav-btn" id="nav-quiz" onclick="navTo('quiz')">
+    <i class="ti ti-help-circle" aria-hidden="true"></i><span>Quiz</span>
+    <span class="nav-badge" id="quiz-badge" style="display:none">!</span>
+  </button>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+// ── FIREBASE ──
+let db = null;
+let userId = null;
+
+function initFirebase() {
+  try {
+    firebase.initializeApp(CONFIG.FIREBASE);
+    db = firebase.firestore();
+    // Enable offline persistence so Firestore caches data on device
+    db.enablePersistence({ synchronizeTabs: true }).catch(err => {
+      if (err.code === 'failed-precondition') {
+        console.warn('Firestore persistence unavailable: multiple tabs open');
+      } else if (err.code === 'unimplemented') {
+        console.warn('Firestore persistence not supported in this browser');
+      }
+    });
+    firebase.auth().signInAnonymously().then(cred => {
+      userId = cred.user.uid;
+      loadUserData();
+    }).catch(() => {
+      userId = "local_" + Math.random().toString(36).slice(2);
+      loadUserData();
+    });
+  } catch(e) {
+    console.warn("Firebase init failed — running in local mode", e);
+    userId = "local";
+    loadUserData();
+  }
+}
+
+// ── STATE ──
+let APP = {
+  profile: null,
+  stats: { streak:0, quizzes:0, scans:0, bestWpm:0, avgScore:0, tasksToday:0 },
+  weakSpots: [],
+  offlineResources: [],
+  speedHistory: [],
+  quizHistory: [],
+  recentActivity: [],
+  currentQuiz: { subject:'Mathematics', difficulty:'easy', questions:[], index:0, score:0, countdown:null },
+  currentSpeed: { level:'easy', timer:null, startTime:0 },
+  scanResult: null,
+  isOnline: navigator.onLine
+};
+
+const PASSAGES = {
+  easy:{
+    text:"Water is very important for all living things. Plants use water to make food through a process called photosynthesis. Animals drink water to stay healthy and keep their bodies working well. Without water, no living thing can survive on Earth. Scientists tell us that our bodies are made of more than sixty percent water. That is why we must drink at least eight glasses of water every day and save water in our homes and communities.",
+    words:73,target:"80–120"
+  },
+  medium:{
+    text:"Ghana became the first country in sub-Saharan Africa to gain independence from British colonial rule on March 6, 1957. The country was led to independence by Osagyefo Dr. Kwame Nkrumah, whose vision of freedom and Pan-Africanism inspired many other African nations to fight for their own independence. Nkrumah believed that African nations should unite and work together so that no foreign power could control them again. He built schools, hospitals, and the Akosombo Dam to provide electricity for the people of Ghana.",
+    words:84,target:"100–150"
+  },
+  hard:{
+    text:"The human immune system is a complex network of cells, tissues, and organs that work together to defend the body against harmful microorganisms such as bacteria, viruses, fungi, and parasites. When a pathogen enters the body, white blood cells called lymphocytes identify it as a foreign substance and produce proteins called antibodies that attach to the pathogen and neutralise it. The body also stores memory cells so that if the same pathogen enters again, the immune response is faster and more effective. This principle is the scientific basis for vaccination, which has eliminated many deadly diseases from the world.",
+    words:98,target:"120–180"
+  }
+};
+
+const JHS_SUBJECTS = ["Mathematics","Integrated Science","English Language","Social Studies","ICT","French","RME","Creative Arts"];
+
+// ── GEMINI AI ──
+// HOW THE API WORKS:
+// 1. Every call goes to https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+// 2. Auth via ?key=YOUR_KEY query param — no special headers needed
+// 3. System prompt and user message are combined into a single "user" part
+// 4. For streaming, use the :streamGenerateContent?alt=sse endpoint
+// 5. Each streamed chunk is a "data:" SSE line containing a JSON candidates object
+// 6. Pull text from candidates[0].content.parts[0].text
+
+async function callClaude(systemPrompt, userMessage, maxTokens=1000) {
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${CONFIG.GEMINI_KEY}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{
+          role: "user",
+          parts: [{ text: systemPrompt + "\n\n" + userMessage }]
+        }],
+        generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 }
+      })
+    }
+  );
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || "API error " + res.status);
+  }
+  const data = await res.json();
+  return (data.candidates?.[0]?.content?.parts?.[0]?.text || "").trim();
+}
+
+async function streamClaude(systemPrompt, userMessage, targetEl, maxTokens=1200) {
+  targetEl.innerHTML = '<span class="cursor"></span>';
+  try {
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?alt=sse&key=${CONFIG.GEMINI_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{
+            role: "user",
+            parts: [{ text: systemPrompt + "\n\n" + userMessage }]
+          }],
+          generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 }
+        })
+      }
+    );
+    if (!res.ok) throw new Error("API error " + res.status);
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let text = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value);
+      const lines = chunk.split("\n").filter(l => l.startsWith("data:"));
+      for (const line of lines) {
+        const raw = line.slice(5).trim();
+        if (raw === "[DONE]") continue;
+        try {
+          const evt = JSON.parse(raw);
+          const part = evt.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (part) {
+            text += part;
+            targetEl.innerHTML = text.replace(/\n/g, "<br>") + '<span class="cursor"></span>';
+          }
+        } catch(_) {}
+      }
+    }
+    targetEl.innerHTML = text.replace(/\n/g, "<br>");
+  } catch(e) {
+    targetEl.innerHTML = "⚠️ Could not connect to AI. Check your API key and internet connection.";
+    console.error(e);
+  }
+}
+
+// ── FIRESTORE HELPERS ──
+// fsSet  → db.collection(col).doc(id).set(data, {merge:true})   [creates or updates]
+// fsGet  → db.collection(col).doc(id).get()                      [fetch single doc]
+// fsAdd  → db.collection(col).add(data)                          [auto-ID new doc]
+// fsQuery→ db.collection(col).where(field,"==",value).get()      [filter by field]
+// Each falls back to localStorage when db is null (offline / no Firebase config)
+
+async function fsSet(col, docId, data) {
+  if (!db) { localStorage.setItem("bw_"+col+"_"+docId, JSON.stringify(data)); return; }
+  try { await db.collection(col).doc(docId).set(data, { merge: true }); } catch(e) { console.warn(e); }
+}
+
+async function fsGet(col, docId) {
+  if (!db) { const v = localStorage.getItem("bw_"+col+"_"+docId); return v ? JSON.parse(v) : null; }
+  try { const d = await db.collection(col).doc(docId).get(); return d.exists ? d.data() : null; } catch(e) { return null; }
+}
+
+async function fsAdd(col, data) {
+  if (!db) {
+    const key = "bw_"+col+"_"+Date.now();
+    localStorage.setItem(key, JSON.stringify({ ...data, id: key }));
+    return key;
+  }
+  try {
+    const r = await db.collection(col).add({ ...data, userId, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    return r.id;
+  } catch(e) { console.warn(e); return null; }
+}
+
+async function fsQuery(col, field, value) {
+  if (!db) {
+    const results = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("bw_"+col)) {
+        try { const v = JSON.parse(localStorage.getItem(k)); if (v && v[field] === value) results.push(v); } catch(_) {}
+      }
+    }
+    return results;
+  }
+  try {
+    const snap = await db.collection(col).where("userId","==",userId).where(field,"==",value).get();
+    return snap.docs.map(d => ({ ...d.data(), id: d.id }));
+  } catch(e) { return []; }
+}
+
+// ── NAV ──
+const NAV_TITLES = {
+  onboard:'Badwenma', home:'Badwenma', scan:'Scan & Analyse',
+  resources:'Resources', speed:'Speed Test', quiz:'Mini Quiz', profile:'My Profile'
+};
+
+function navTo(screen) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const s = document.getElementById('screen-'+screen);
+  if (s) s.classList.add('active');
+  const nb = document.getElementById('nav-'+screen);
+  if (nb) nb.classList.add('active');
+  document.getElementById('topbar-title').textContent = NAV_TITLES[screen] || 'Badwenma';
+  document.getElementById('screens').scrollTop = 0;
+  if (screen === 'home')      refreshHome();
+  if (screen === 'quiz')      setupQuizStart();
+  if (screen === 'profile')   refreshProfile();
+  if (screen === 'speed')     initSpeed();
+  if (screen === 'resources') loadResources();
+}
+
+// ── ONBOARDING ──
+document.querySelectorAll('.subject-chip').forEach(chip => {
+  chip.addEventListener('click', () => chip.classList.toggle('selected'));
+});
+
+async function saveProfile() {
+  const name = document.getElementById('ob-name').value.trim();
+  const cls  = document.getElementById('ob-class').value;
+  if (!name) { showToast("Please enter your name"); return; }
+  if (!cls)  { showToast("Please select your class"); return; }
+  const subjects = [...document.querySelectorAll('.subject-chip.selected')].map(c => c.dataset.subj);
+  const profile = { name, class: cls, school: document.getElementById('ob-school').value.trim(), subjects, createdAt: Date.now() };
+  APP.profile = profile;
+  await fsSet('profiles', userId, profile);
+  await fsSet('stats', userId, APP.stats);
+  showToast("Welcome, "+name+"! 🎉");
+  setTimeout(() => navTo('home'), 400);
+}
+
+async function loadUserData() {
+  const profile = await fsGet('profiles', userId);
+  if (!profile) { navTo('onboard'); return; }
+  APP.profile = profile;
+  const stats = await fsGet('stats', userId);
+  if (stats) APP.stats = { ...APP.stats, ...stats };
+  const ws = await fsQuery('weakspots','userId',userId);
+  APP.weakSpots = ws.sort((a,b) => (a.accuracy||100)-(b.accuracy||100)).slice(0,5);
+  const offlineRaw = await fsQuery('offline','userId',userId);
+  APP.offlineResources = offlineRaw;
+  const spd = await fsGet('speed_history', userId);
+  if (spd && spd.history) APP.speedHistory = spd.history;
+  const qh = await fsGet('quiz_history', userId);
+  if (qh && qh.history) APP.quizHistory = qh.history;
+  navTo('home');
+  checkOnlineStatus();
+}
+
+function checkOnlineStatus() {
+  const banner = document.getElementById('offline-banner-home');
+  window.addEventListener('online',  () => { APP.isOnline = true;  if (banner) banner.style.display = 'none'; });
+  window.addEventListener('offline', () => { APP.isOnline = false; if (banner) banner.style.display = 'flex'; });
+  if (!APP.isOnline && banner) banner.style.display = 'flex';
+}
+
+// ── HOME ──
+function refreshHome() {
+  if (!APP.profile) return;
+  const hr = new Date().getHours();
+  document.getElementById('home-greeting').textContent =
+    (hr<12 ? "Good morning" : hr<17 ? "Good afternoon" : "Good evening") + ", " + APP.profile.name.split(" ")[0] + "! 👋";
+  document.getElementById('stat-score').textContent = APP.stats.avgScore ? APP.stats.avgScore+"%" : "–";
+  document.getElementById('stat-quiz').textContent  = APP.stats.quizzes || 0;
+  document.getElementById('stat-wpm').textContent   = APP.stats.bestWpm || "–";
+  const tasks = Math.min(5, APP.stats.quizzes % 5 || 0);
+  document.getElementById('home-goal-text').textContent = tasks+" / 5 tasks";
+  document.getElementById('home-goal-bar').style.width   = (tasks/5*100)+"%";
+  document.getElementById('home-subtext').textContent =
+    APP.weakSpots.length ? "You have "+APP.weakSpots.length+" weak spot(s) to review today." : "Keep up the great work today!";
+  document.getElementById('streak-num').textContent = APP.stats.streak || 0;
+
+  const wc = document.getElementById('weak-card');
+  const wl = document.getElementById('weak-list');
+  if (APP.weakSpots.length) {
+    wc.style.display = 'block';
+    wl.innerHTML = APP.weakSpots.slice(0,3).map(w => `
+      <div class="res-item">
+        <div class="res-icon doc"><i class="ti ti-alert-triangle" aria-hidden="true"></i></div>
+        <div class="res-info">
+          <div class="res-title">${w.topic}</div>
+          <div class="res-sub">${w.subject} · ${w.accuracy}% accuracy</div>
+          <div class="prog-wrap" style="margin-top:6px">
+            <div class="prog-fill" style="width:${w.accuracy}%;background:${w.accuracy<50?'var(--c)':w.accuracy<70?'var(--y)':'var(--g)'}"></div>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-mint" onclick="goToResourcesFor('${w.topic}','${w.subject}')">
+          <i class="ti ti-books" aria-hidden="true"></i>
+        </button>
+      </div>`).join('');
+  } else { wc.style.display = 'none'; }
+
+  const rc = document.getElementById('recent-card');
+  const rl = document.getElementById('recent-list');
+  if (APP.recentActivity.length) {
+    rc.style.display = 'block';
+    rl.innerHTML = APP.recentActivity.slice(0,4).map(a => `
+      <div class="res-item">
+        <div class="res-icon ${a.type==='quiz'?'quiz-icon':a.type==='scan'?'doc':'vid'}">
+          <i class="ti ti-${a.type==='quiz'?'help-circle':a.type==='scan'?'scan':'bolt'}" aria-hidden="true"></i>
+        </div>
+        <div class="res-info">
+          <div class="res-title">${a.title}</div>
+          <div class="res-sub">${a.detail} · ${timeAgo(a.time)}</div>
+        </div>
+      </div>`).join('');
+  } else { rc.style.display = 'none'; }
+}
+
+function timeAgo(ts) {
+  const diff = (Date.now()-ts)/1000;
+  if (diff<60)    return "just now";
+  if (diff<3600)  return Math.round(diff/60)+"m ago";
+  if (diff<86400) return Math.round(diff/3600)+"h ago";
+  return Math.round(diff/86400)+"d ago";
+}
+
+// ── SCAN ──
+let pendingFiles = [];
+
+function scanTab(btn, tab) {
+  btn.closest('.tab-bar').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('scan-upload').style.display  = tab==='upload'  ? 'block':'none';
+  document.getElementById('scan-camera').style.display  = tab==='camera'  ? 'block':'none';
+  document.getElementById('scan-results').style.display = tab==='results' ? 'block':'none';
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.remove('drag');
+  handleFiles(e.dataTransfer.files);
+}
+
+async function handleFiles(files) {
+  if (!files || !files.length) return;
+  pendingFiles = [...files];
+  const list = document.getElementById('file-list');
+  list.innerHTML = pendingFiles.map(f => `
+    <div class="res-item" style="padding:10px 0">
+      <div class="res-icon doc" style="width:36px;height:36px;font-size:15px">
+        <i class="ti ti-file-${f.name.endsWith('.pdf')?'type-pdf':f.name.match(/\.(pptx?)/i)?'presentation':'photo'}" aria-hidden="true"></i>
+      </div>
+      <div class="res-info">
+        <div class="res-title">${f.name}</div>
+        <div class="res-sub">${f.type||'File'} · ${(f.size/1024/1024).toFixed(1)} MB</div>
+      </div>
+      <span class="pill pill-blue">${f.name.split('.').pop().toUpperCase()}</span>
+    </div>`).join('');
+  document.getElementById('file-queue').style.display = 'block';
+}
+
+async function extractTextFromFile(file) {
+  if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) return extractPDF(file);
+  if (file.type.startsWith('image/')) {
+    return new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = () => resolve({ type:'image', data: reader.result.split(',')[1], mimeType: file.type });
+      reader.readAsDataURL(file);
+    });
+  }
+  return { type:'text', content:`[File: ${file.name} — a PPTX presentation. Please analyse the filename and subject context.]` };
+}
+
+async function extractPDF(file) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = async e => {
+      try {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+        const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(e.target.result) }).promise;
+        let text = '';
+        for (let i = 1; i <= Math.min(pdf.numPages, 8); i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          text += content.items.map(it => it.str).join(' ') + '\n';
+        }
+        resolve({ type:'text', content: text.slice(0,6000) });
+      } catch(err) { resolve({ type:'text', content:`[PDF: ${file.name}]` }); }
+    };
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+async function analyseFiles() {
+  if (!pendingFiles.length) { showToast("No files to analyse"); return; }
+  const btn = document.getElementById('analyse-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Analysing...';
+  document.getElementById('tab-results').style.display = 'inline-block';
+  scanTab(document.getElementById('tab-results'), 'results');
+  document.getElementById('scan-results').style.display = 'block';
+  document.getElementById('results-loading').style.display = 'block';
+  document.getElementById('results-content').style.display = 'none';
+  const subject = document.getElementById('scan-subject').value || 'unknown subject';
+  try {
+    document.getElementById('results-loading-text').textContent = 'Reading your file...';
+    const extracted = await extractTextFromFile(pendingFiles[0]);
+    document.getElementById('results-loading-text').textContent = 'AI is analysing your exam...';
+    const sysPrompt = `You are an expert JHS (Junior High School) teacher in Ghana analysing a student's exam paper or notes.
+Return ONLY a JSON object with this exact structure:
+{
+  "subject": "detected subject name",
+  "totalQuestions": number,
+  "correctAnswers": number,
+  "overallPercent": number,
+  "topics": [{"name":"topic name","accuracy":0-100,"status":"weak|okay|strong"}],
+  "weakTopics": ["topic1","topic2"],
+  "feedback": "2-3 sentence personalised feedback for a JHS student"
+}
+Keep feedback encouraging, age-appropriate, and specific.`;
+    if (extracted.type === 'image') {
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${CONFIG.GEMINI_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              role: 'user',
+              parts: [
+                { inline_data: { mime_type: extracted.mimeType, data: extracted.data } },
+                { text: sysPrompt + '\n\nAnalyse this exam sheet for a JHS student. Subject hint: ' + subject }
+              ]
+            }],
+            generationConfig: { maxOutputTokens: 1000, temperature: 0.5 }
+          })
+        }
+      );
+      const d = await res.json();
+      const raw = d.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      displayScanResults(JSON.parse(raw.replace(/```json|```/g,'').trim()));
+    } else {
+      const raw = await callClaude(sysPrompt, 'Subject: '+subject+'\n\nContent:\n'+extracted.content, 1200);
+      displayScanResults(JSON.parse(raw.replace(/```json|```/g,'').trim()));
+    }
+  } catch(e) {
+    console.error(e);
+    document.getElementById('results-loading').style.display = 'none';
+    document.getElementById('results-content').style.display = 'block';
+    document.getElementById('res-feedback').innerHTML = '⚠️ Analysis failed. Error: '+e.message;
+    document.getElementById('res-subject').textContent = 'Analysis error';
+  }
+  btn.disabled = false;
+  btn.innerHTML = '<i class="ti ti-wand"></i> Analyse with AI';
+}
+
+async function displayScanResults(data) {
+  document.getElementById('results-loading').style.display = 'none';
+  document.getElementById('results-content').style.display = 'block';
+  document.getElementById('res-overall').textContent = data.overallPercent+'%';
+  document.getElementById('res-subject').textContent = data.subject || 'Exam';
+  document.getElementById('res-meta').textContent = (data.totalQuestions||'–')+' questions analysed';
+  const pct = data.overallPercent || 0;
+  const circle = document.getElementById('score-circle');
+  circle.style.background = pct>=70?'#ECFDF5':pct>=50?'#FFFBEB':'#FFF0F0';
+  document.getElementById('res-overall').style.color = pct>=70?'var(--g)':pct>=50?'#92400E':'var(--c)';
+  document.getElementById('res-pills').innerHTML =
+    `<span class="pill pill-green">${data.correctAnswers||'–'} correct</span>
+     <span class="pill pill-red">${(data.totalQuestions||0)-(data.correctAnswers||0)} wrong</span>`;
+  document.getElementById('res-topics').innerHTML = (data.topics||[]).map(t=>`
+    <div class="score-topic">
+      <div class="score-topic-header">
+        <span>${t.name}</span>
+        <span style="font-weight:600;color:${t.accuracy>=70?'var(--g)':t.accuracy>=50?'var(--y)':'var(--c)'}">${t.accuracy}%</span>
+      </div>
+      <div class="prog-wrap"><div class="prog-fill" style="width:${t.accuracy}%;background:${t.accuracy>=70?'var(--g)':t.accuracy>=50?'var(--y)':'var(--c)'}"></div></div>
+    </div>`).join('');
+  document.getElementById('res-feedback').textContent = data.feedback || '';
+  APP.scanResult = data;
+  for (const t of (data.weakTopics||[])) {
+    const ws = { topic:t, subject:data.subject, accuracy:data.topics?.find(x=>x.name===t)?.accuracy||40, userId, updatedAt:Date.now() };
+    await fsAdd('weakspots', ws);
+    if (!APP.weakSpots.find(w=>w.topic===t)) APP.weakSpots.push(ws);
+  }
+  APP.stats.scans = (APP.stats.scans||0)+1;
+  const allAcc = data.topics?.map(t=>t.accuracy)||[];
+  if (allAcc.length) APP.stats.avgScore = Math.round(allAcc.reduce((a,b)=>a+b,0)/allAcc.length);
+  await fsSet('stats', userId, APP.stats);
+  APP.recentActivity.unshift({ type:'scan', title:data.subject+' Exam', detail:data.overallPercent+'% score', time:Date.now() });
+  showToast('✅ Analysis complete!');
+}
+
+function getResourcesForResults() {
+  if (APP.scanResult?.weakTopics?.length) goToResourcesFor(APP.scanResult.weakTopics[0], APP.scanResult.subject);
+  else navTo('resources');
+}
+
+// Camera
+let cameraStream = null;
+async function startCamera() {
+  try {
+    cameraStream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:'environment' } });
+    const vid = document.getElementById('camera-video');
+    vid.srcObject = cameraStream; vid.style.display = 'block'; vid.play();
+    document.getElementById('camera-placeholder').style.display = 'none';
+    document.getElementById('camera-controls').innerHTML = `
+      <button class="btn btn-coral" style="flex:1" onclick="capturePhoto()"><i class="ti ti-camera" aria-hidden="true"></i> Capture</button>
+      <button class="btn btn-ghost" style="flex:1" onclick="stopCamera()"><i class="ti ti-x" aria-hidden="true"></i> Cancel</button>`;
+  } catch(e) { showToast("Camera access denied or unavailable"); }
+}
+
+function capturePhoto() {
+  const vid = document.getElementById('camera-video');
+  const canvas = document.getElementById('camera-canvas');
+  canvas.width = vid.videoWidth; canvas.height = vid.videoHeight;
+  canvas.getContext('2d').drawImage(vid,0,0);
+  const snap = document.getElementById('camera-snap');
+  snap.src = canvas.toDataURL('image/jpeg',0.9);
+  snap.style.display = 'block'; vid.style.display = 'none';
+  stopCamera();
+  canvas.toBlob(async blob => {
+    const file = new File([blob],'scan.jpg',{type:'image/jpeg'});
+    pendingFiles = [file];
+    await handleFiles([file]);
+    document.getElementById('camera-controls').innerHTML = `
+      <button class="btn btn-primary" style="flex:1" onclick="analyseFiles()"><i class="ti ti-wand" aria-hidden="true"></i> Analyse</button>
+      <button class="btn btn-ghost" style="flex:1" onclick="startCamera()"><i class="ti ti-camera" aria-hidden="true"></i> Retake</button>`;
+  },'image/jpeg',0.9);
+}
+
+function stopCamera() {
+  if (cameraStream) { cameraStream.getTracks().forEach(t=>t.stop()); cameraStream=null; }
+  document.getElementById('camera-video').style.display = 'none';
+}
+
+// ── RESOURCES ──
+function resTab(btn, tab) {
+  btn.closest('.tab-bar').querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('res-online').style.display  = tab==='online'  ? 'block':'none';
+  document.getElementById('res-offline').style.display = tab==='offline' ? 'block':'none';
+  if (tab==='offline') renderOfflineList();
+}
+
+async function loadResources() {
+  const subj  = document.getElementById('res-subj-filter')?.value || '';
+  const type  = document.getElementById('res-type-filter')?.value || '';
+  const topic = subj || APP.weakSpots[0]?.topic || 'JHS curriculum Ghana';
+  await fetchAndRenderResources(topic, subj, type);
+}
+
+async function searchResources() {
+  const query = document.getElementById('res-search-input').value.trim();
+  if (!query) { showToast("Enter a topic to search"); return; }
+  const subj = document.getElementById('res-subj-filter').value;
+  await fetchAndRenderResources(query, subj, '');
+}
+
+async function fetchAndRenderResources(topic, subject, type) {
+  const list = document.getElementById('res-list');
+  const loading = document.getElementById('res-loading');
+  list.innerHTML = ''; loading.style.display = 'block';
+  try {
+    const sysPrompt = `You are an educational resource finder for JHS students in Ghana.
+Return ONLY a JSON array of 6 resources:
+[{"title":"...","type":"video|notes|exercise","source":"YouTube|Khan Academy|GES|etc","duration":"X min","description":"1 sentence","url":"https://...","difficulty":"easy|medium|hard"}]
+Focus on free, accessible resources. Only return the JSON array.`;
+    const raw = await callClaude(sysPrompt,
+      `Find study resources for: ${topic}${subject?' (Subject: '+subject+')':''}${type?' Type: '+type:''}. Target: JHS students in Ghana.`);
+    const resources = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    loading.style.display = 'none';
+    list.innerHTML = '<div class="card"><div class="card-title"><i class="ti ti-books" aria-hidden="true"></i> Resources found</div>' +
+      resources.map(r=>`
+        <div class="res-item">
+          <div class="res-icon ${r.type==='video'?'vid':r.type==='notes'?'note':'doc'}">
+            <i class="ti ti-${r.type==='video'?'player-play':r.type==='notes'?'notes':'file-description'}" aria-hidden="true"></i>
+          </div>
+          <div class="res-info">
+            <div class="res-title">${r.title}</div>
+            <div class="res-sub">${r.source} · ${r.duration||''}</div>
+            <div style="font-size:11px;color:var(--txt2);margin-top:2px;line-height:1.5">${r.description}</div>
+            <div class="res-actions">
+              <button class="btn btn-sm btn-primary" onclick="openURL('${r.url}')"><i class="ti ti-external-link" aria-hidden="true"></i> Open</button>
+              <button class="btn btn-sm btn-ghost" onclick='saveOffline(${JSON.stringify(r).replace(/'/g,"&#39;")})'>
+                <i class="ti ti-download" aria-hidden="true"></i> Save
+              </button>
+            </div>
+          </div>
+          <span class="pill ${r.difficulty==='easy'?'pill-green':r.difficulty==='hard'?'pill-red':'pill-yellow'}" style="flex-shrink:0">${r.difficulty}</span>
+        </div>`).join('') + '</div>';
+  } catch(e) {
+    loading.style.display = 'none';
+    list.innerHTML = '<div class="card"><div class="ai-bubble">⚠️ Could not load resources. Check your internet connection and API key.</div></div>';
+    console.error(e);
+  }
+}
+
+function goToResourcesFor(topic, subject) {
+  navTo('resources');
+  document.getElementById('res-search-input').value = topic;
+  if (subject) document.getElementById('res-subj-filter').value = subject;
+  fetchAndRenderResources(topic, subject, '');
+}
+
+function openURL(url) { window.open(url,'_blank','noopener,noreferrer'); }
+
+async function saveOffline(resource) {
+  if (typeof resource === 'string') resource = JSON.parse(resource);
+  const item = { ...resource, userId, savedAt: Date.now() };
+  await fsAdd('offline', item);
+  APP.offlineResources.push(item);
+  document.getElementById('offline-count-badge').textContent = APP.offlineResources.length;
+  renderOfflineList();
+  showToast("⬇️ Saved: "+resource.title);
+  if ('caches' in window && resource.url) {
+    caches.open('badwenma-offline').then(cache => cache.add(resource.url).catch(()=>{}));
+  }
+}
+
+function renderOfflineList() {
+  const list = document.getElementById('offline-list');
+  if (!APP.offlineResources.length) {
+    list.innerHTML = '<div class="empty-state"><i class="ti ti-cloud-off" aria-hidden="true"></i><p>No offline resources yet.<br>Download some from the Online tab.</p></div>';
+    return;
+  }
+  list.innerHTML = APP.offlineResources.map(r=>`
+    <div class="res-item">
+      <div class="res-icon ${r.type==='video'?'vid':'note'}">
+        <i class="ti ti-${r.type==='video'?'player-play':'notes'}" aria-hidden="true"></i>
+      </div>
+      <div class="res-info">
+        <div class="res-title">${r.title}</div>
+        <div class="res-sub">${r.source||''} · Saved ${timeAgo(r.savedAt)}</div>
+        <div class="res-actions">
+          <button class="btn btn-sm btn-primary" onclick="openURL('${r.url}')"><i class="ti ti-external-link" aria-hidden="true"></i> Open</button>
+        </div>
+      </div>
+    </div>`).join('');
+  document.getElementById('offline-count-badge').textContent = APP.offlineResources.length;
+}
+
+// ── SPEED TEST ──
+let speedChart = null;
+
+function initSpeed() {
+  APP.currentSpeed.level = 'easy';
+  document.getElementById('speed-intro').style.display = 'block';
+  document.getElementById('speed-active').style.display = 'none';
+  document.getElementById('speed-results').style.display = 'none';
+  const firstTab = document.querySelector('#screen-speed .tab-bar .tab');
+  if (firstTab) setSpeedLevel(firstTab,'easy');
+}
+
+function setSpeedLevel(btn, level) {
+  document.querySelectorAll('#screen-speed .tab-bar .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  APP.currentSpeed.level = level;
+  const p = PASSAGES[level];
+  document.getElementById('speed-passage-text').textContent = p.text;
+  document.getElementById('s-words').textContent = p.words;
+  document.getElementById('s-target').textContent = p.target;
+}
+
+function startSpeed() {
+  document.getElementById('speed-intro').style.display = 'none';
+  document.getElementById('speed-active').style.display = 'block';
+  document.getElementById('speed-active-text').textContent = PASSAGES[APP.currentSpeed.level].text;
+  APP.currentSpeed.startTime = Date.now();
+  APP.currentSpeed.timer = setInterval(() => {
+    document.getElementById('speed-clock').textContent = ((Date.now()-APP.currentSpeed.startTime)/1000).toFixed(1)+'s';
+  }, 100);
+}
+
+async function stopSpeed() {
+  clearInterval(APP.currentSpeed.timer);
+  const elapsed = (Date.now()-APP.currentSpeed.startTime)/1000;
+  const wpm = Math.round((PASSAGES[APP.currentSpeed.level].words/elapsed)*60);
+  document.getElementById('speed-active').style.display = 'none';
+  document.getElementById('speed-results').style.display = 'block';
+  document.getElementById('s-wpm-result').textContent = wpm;
+  document.getElementById('s-time').textContent = elapsed.toFixed(1)+'s';
+  document.getElementById('s-best').textContent = Math.max(wpm, APP.stats.bestWpm||0)+' WPM';
+  const ring = document.getElementById('speed-ring');
+  ring.style.strokeDashoffset = 408 - Math.min(408,(wpm/200)*408);
+  ring.style.stroke = wpm>=120?'var(--g)':wpm>=80?'var(--m)':'var(--c)';
+  let grade, advice;
+  if      (wpm<60)  { grade='Keep practising 📖'; advice='Try reading aloud every day. Start with short stories and grade up slowly.'; }
+  else if (wpm<100) { grade='Getting better! 👍'; advice='Good progress! Challenge yourself to read slightly faster each session.'; }
+  else if (wpm<150) { grade='Well done! 🌟';      advice='Above average for your grade. Try the Hard level next!'; }
+  else              { grade='Excellent reader! 🏆'; advice='Outstanding! You read much faster than most JHS students.'; }
+  document.getElementById('s-grade').textContent  = grade;
+  document.getElementById('s-advice').textContent = advice;
+  if (wpm >= (APP.stats.bestWpm||0)) { APP.stats.bestWpm = wpm; showToast('🏆 New personal best: '+wpm+' WPM!'); }
+  APP.speedHistory.push({ wpm, time:Date.now(), level:APP.currentSpeed.level });
+  if (APP.speedHistory.length > 10) APP.speedHistory.shift();
+  await fsSet('speed_history', userId, { history:APP.speedHistory });
+  await fsSet('stats', userId, APP.stats);
+  APP.recentActivity.unshift({ type:'speed', title:'Speed Test', detail:wpm+' WPM', time:Date.now() });
+  setTimeout(() => renderSpeedChart(), 100);
+  const tipEl = document.getElementById('s-ai-tip');
+  tipEl.style.display = 'block';
+  streamClaude(
+    'You are a helpful reading coach for JHS students in Ghana. Give a 2-sentence specific tip.',
+    `A JHS student just read at ${wpm} WPM (level: ${APP.currentSpeed.level}). Past scores: ${APP.speedHistory.map(h=>h.wpm).join(', ')} WPM. One specific, encouraging tip to improve.`,
+    tipEl, 200
+  );
+}
+
+function retrySpeed() { clearInterval(APP.currentSpeed.timer); initSpeed(); }
+
+function renderSpeedChart() {
+  const ctx = document.getElementById('speed-chart');
+  if (!ctx) return;
+  if (speedChart) { speedChart.destroy(); speedChart = null; }
+  speedChart = new Chart(ctx, {
+    type:'line',
+    data:{
+      labels: APP.speedHistory.map((_,i)=>'#'+(i+1)),
+      datasets:[{ data:APP.speedHistory.map(h=>h.wpm), borderColor:'#4ECDC4', backgroundColor:'rgba(78,205,196,0.12)', fill:true, tension:0.4, pointBackgroundColor:'#4ECDC4', pointRadius:4, borderWidth:2 }]
+    },
+    options:{ responsive:true, plugins:{legend:{display:false}}, scales:{
+      y:{ beginAtZero:false, grid:{color:'rgba(26,20,100,0.05)'}, ticks:{font:{size:11},color:'#6B7280'} },
+      x:{ grid:{display:false}, ticks:{font:{size:11},color:'#6B7280'} }
+    }}
+  });
+}
+
+// ── QUIZ ──
+let profileChart = null;
+
+function setupQuizStart() {
+  const chips = document.getElementById('quiz-subject-chips');
+  const subjects = APP.profile?.subjects || JHS_SUBJECTS;
+  chips.innerHTML = subjects.map((s,i)=>`
+    <span class="subject-chip ${i===0?'selected':''}" data-subj="${s}" onclick="selectQuizSubject(this)">${s}</span>`).join('');
+  APP.currentQuiz.subject = subjects[0] || 'Mathematics';
+}
+
+function selectQuizSubject(el) {
+  document.querySelectorAll('#quiz-subject-chips .subject-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  APP.currentQuiz.subject = el.dataset.subj;
+}
+
+function setQuizDiff(btn, diff) {
+  btn.closest('div').querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  APP.currentQuiz.difficulty = diff;
+}
+
+async function beginQuiz() {
+  APP.currentQuiz.questions = [];
+  APP.currentQuiz.index = 0;
+  APP.currentQuiz.score = 0;
+  clearInterval(APP.currentQuiz.countdown);
+  document.getElementById('quiz-start').style.display  = 'none';
+  document.getElementById('quiz-active').style.display = 'block';
+  document.getElementById('quiz-results').style.display = 'none';
+  document.getElementById('q-subj-pill').textContent = APP.currentQuiz.subject;
+  const badge = document.getElementById('quiz-badge');
+  if (badge) badge.style.display = 'none';
+  await loadQuizQuestion();
+}
+
+async function loadQuizQuestion() {
+  const q = APP.currentQuiz;
+  document.getElementById('qnum').textContent = q.index+1;
+  document.getElementById('q-prog').style.width = ((q.index+1)/5*100)+'%';
+  document.getElementById('q-loading').style.display = 'block';
+  document.getElementById('q-content').style.display = 'none';
+  document.getElementById('q-feedback').style.display = 'none';
+  document.getElementById('q-next').style.display = 'none';
+  const weakContext = APP.weakSpots.filter(w=>w.subject===q.subject).map(w=>w.topic).join(', ') || 'general topics';
+  try {
+    const sysPrompt = `You are a JHS exam question generator for Ghana.
+Generate ONE multiple-choice question. Return ONLY this JSON:
+{"question":"...","options":["A) ...","B) ...","C) ...","D) ..."],"correct":0,"explanation":"1-2 sentences for a JHS student"}
+correct is the 0-based index of the correct option.`;
+    const raw = await callClaude(sysPrompt,
+      `Subject: ${q.subject}\nDifficulty: ${q.difficulty}\nFocus on weak topics if possible: ${weakContext}\nQuestion ${q.index+1} of 5.`);
+    const qData = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    q.questions.push(qData);
+    document.getElementById('q-loading').style.display = 'none';
+    document.getElementById('q-content').style.display = 'block';
+    document.getElementById('q-text').textContent = qData.question;
+    document.getElementById('q-options').innerHTML = qData.options.map((o,i)=>
+      `<button class="quiz-option" onclick="answerQuiz(${i})">${o}</button>`).join('');
+    clearInterval(q.countdown);
+    let t = 30;
+    document.getElementById('q-timer').textContent = t;
+    q.countdown = setInterval(() => {
+      t--;
+      document.getElementById('q-timer').textContent = t;
+      if (t<=0) { clearInterval(q.countdown); timeoutQuiz(); }
+    }, 1000);
+  } catch(e) {
+    document.getElementById('q-loading').style.display = 'none';
+    document.getElementById('q-content').style.display = 'block';
+    document.getElementById('q-text').textContent = '⚠️ Could not generate question. Check API key.';
+    console.error(e);
+  }
+}
+
+function answerQuiz(chosen) {
+  clearInterval(APP.currentQuiz.countdown);
+  const q = APP.currentQuiz;
+  const qData = q.questions[q.index];
+  const opts = document.querySelectorAll('.quiz-option');
+  opts.forEach(o => o.disabled = true);
+  const correct = chosen === qData.correct;
+  if (correct) q.score++;
+  opts[chosen].classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) opts[qData.correct].classList.add('correct');
+  const fb = document.getElementById('q-feedback');
+  fb.style.display = 'block';
+  fb.innerHTML = `<div class="feedback-box ${correct?'correct':'wrong'}">
+    ${correct?'✅ <strong>Correct!</strong>':'❌ <strong>Wrong.</strong> The answer is <strong>'+qData.options[qData.correct]+'</strong>.'}<br>
+    ${qData.explanation}</div>`;
+  document.getElementById('q-next').style.display = 'block';
+}
+
+function timeoutQuiz() {
+  const q = APP.currentQuiz;
+  const qData = q.questions[q.index];
+  if (!qData) return;
+  const opts = document.querySelectorAll('.quiz-option');
+  opts.forEach(o => o.disabled = true);
+  opts[qData.correct]?.classList.add('correct');
+  const fb = document.getElementById('q-feedback');
+  fb.style.display = 'block';
+  fb.innerHTML = `<div class="feedback-box timeout">⏱️ <strong>Time's up!</strong> The answer was <strong>${qData.options[qData.correct]}</strong>.<br>${qData.explanation}</div>`;
+  document.getElementById('q-next').style.display = 'block';
+}
+
+async function nextQuizQ() {
+  APP.currentQuiz.index++;
+  if (APP.currentQuiz.index >= 5) { await finishQuiz(); return; }
+  await loadQuizQuestion();
+}
+
+async function finishQuiz() {
+  clearInterval(APP.currentQuiz.countdown);
+  const q = APP.currentQuiz;
+  document.getElementById('quiz-active').style.display  = 'none';
+  document.getElementById('quiz-results').style.display = 'block';
+  const score = q.score;
+  document.getElementById('quiz-score-txt').textContent = score+'/5';
+  document.getElementById('qr-correct').textContent = score;
+  document.getElementById('qr-wrong').textContent   = 5-score;
+  const verdicts = [
+    ['😢','Keep studying — you\'ll get it!'],
+    ['😐','Getting there, keep practising!'],
+    ['🙂','Not bad! Review the ones you missed.'],
+    ['😄','Good job! Almost there.'],
+    ['🌟','Excellent! Nearly perfect!'],
+    ['🏆','Perfect score! Amazing work!']
+  ];
+  const v = verdicts[score];
+  document.getElementById('quiz-emoji').textContent   = v[0];
+  document.getElementById('quiz-verdict').textContent = v[1];
+  APP.stats.quizzes = (APP.stats.quizzes||0)+1;
+  APP.stats.streak  = (APP.stats.streak||0)+1;
+  document.getElementById('streak-num').textContent = APP.stats.streak;
+  APP.quizHistory.push({ subject:q.subject, score, total:5, difficulty:q.difficulty, time:Date.now() });
+  if (APP.quizHistory.length > 20) APP.quizHistory.shift();
+  await fsSet('quiz_history', userId, { history:APP.quizHistory });
+  await fsSet('stats', userId, APP.stats);
+  APP.recentActivity.unshift({ type:'quiz', title:q.subject+' Quiz', detail:score+'/5 correct', time:Date.now() });
+  showToast('Quiz done! '+score+'/5 ✅');
+  const summaryEl = document.getElementById('quiz-ai-summary');
+  const wrongTopics = q.questions.filter((_,i)=>i>=q.score).map(qd=>qd.question).slice(0,2).join('; ');
+  streamClaude(
+    'You are an encouraging JHS teacher giving quick post-quiz feedback. Be brief (2 sentences), specific, and positive.',
+    `Student scored ${score}/5 on a ${q.difficulty} ${q.subject} quiz. ${wrongTopics?'They struggled with: '+wrongTopics:'They did well.'} Brief personalised advice.`,
+    summaryEl, 180
+  );
+}
+
+function retryQuiz() {
+  clearInterval(APP.currentQuiz.countdown);
+  document.getElementById('quiz-results').style.display = 'none';
+  document.getElementById('quiz-active').style.display  = 'none';
+  document.getElementById('quiz-start').style.display   = 'block';
+}
+
+// ── PROFILE ──
+function refreshProfile() {
+  if (!APP.profile) return;
+  const n = APP.profile.name;
+  document.getElementById('profile-name').textContent   = n;
+  document.getElementById('profile-class').textContent  = APP.profile.class||'';
+  document.getElementById('profile-school').textContent = APP.profile.school||'';
+  document.getElementById('profile-avatar').textContent = n.charAt(0).toUpperCase();
+  document.getElementById('pf-streak').textContent    = APP.stats.streak||0;
+  document.getElementById('pf-quizzes').textContent   = APP.stats.quizzes||0;
+  document.getElementById('pf-scans').textContent     = APP.stats.scans||0;
+  document.getElementById('pf-best-wpm').textContent  = APP.stats.bestWpm||'–';
+  const ctx = document.getElementById('profile-chart');
+  if (!ctx) return;
+  if (profileChart) { profileChart.destroy(); profileChart = null; }
+  const last8 = APP.quizHistory.slice(-8);
+  profileChart = new Chart(ctx, {
+    type:'bar',
+    data:{
+      labels: last8.map(h=>h.subject.split(' ')[0]),
+      datasets:[{ data:last8.map(h=>Math.round(h.score/h.total*100)),
+        backgroundColor:last8.map(h=>h.score/h.total>=0.7?'rgba(34,197,94,0.7)':'rgba(255,107,107,0.7)'), borderRadius:6 }]
+    },
+    options:{ responsive:true, plugins:{legend:{display:false}}, scales:{
+      y:{ beginAtZero:true, max:100, ticks:{callback:v=>v+'%',font:{size:11},color:'#6B7280'}, grid:{color:'rgba(26,20,100,0.05)'} },
+      x:{ grid:{display:false}, ticks:{font:{size:11},color:'#6B7280'} }
+    }}
+  });
+}
+
+function editProfile() {
+  navTo('onboard');
+  if (APP.profile) {
+    document.getElementById('ob-name').value   = APP.profile.name||'';
+    document.getElementById('ob-class').value  = APP.profile.class||'';
+    document.getElementById('ob-school').value = APP.profile.school||'';
+  }
+}
+
+async function clearData() {
+  if (!confirm('Clear all your study data? This cannot be undone.')) return;
+  APP.stats = { streak:0, quizzes:0, scans:0, bestWpm:0, avgScore:0 };
+  APP.weakSpots = []; APP.speedHistory = []; APP.quizHistory = []; APP.recentActivity = [];
+  if (db) {
+    ['stats','weakspots','offline','speed_history','quiz_history'].forEach(c => {
+      db.collection(c).where('userId','==',userId).get()
+        .then(s => s.docs.forEach(d => d.ref.delete())).catch(()=>{});
+    });
+  } else {
+    for (let i = localStorage.length-1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('bw_')) localStorage.removeItem(k);
+    }
+  }
+  showToast('All data cleared');
+  navTo('home');
+}
+
+// ── TOAST ──
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── SERVICE WORKER (PWA offline shell) ──
+function registerSW() {
+  if (!('serviceWorker' in navigator)) return;
+  const swCode = `
+const CACHE = 'badwenma-v1';
+const SHELL = ['/'];
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)));
+  self.skipWaiting();
+});
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(keys =>
+    Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+  ));
+  self.clients.claim();
+});
+self.addEventListener('fetch', e => {
+  if (e.request.method !== 'GET') return;
+  e.respondWith(
+    caches.match(e.request).then(cached => {
+      const net = fetch(e.request).then(res => {
+        if (res.ok) {
+          const c = res.clone();
+          caches.open(CACHE).then(cache => cache.put(e.request, c));
+        }
+        return res;
+      }).catch(() => {});
+      return cached || net;
+    })
+  );
+});`;
+  const blob = new Blob([swCode], { type:'text/javascript' });
+  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+}
+
+// ── BOOT ──
+document.addEventListener('DOMContentLoaded', () => {
+  registerSW();
+  initFirebase();
+  document.getElementById('speed-passage-text').textContent = PASSAGES.easy.text;
+  document.getElementById('s-words').textContent  = PASSAGES.easy.words;
+  document.getElementById('s-target').textContent = PASSAGES.easy.target;
+});
+</script>
+</body>
+</html>
